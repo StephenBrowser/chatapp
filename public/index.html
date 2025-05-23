@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Messaging App</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    #chat {
+      display: none;
+      margin-top: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 300px;
+      margin-bottom: 10px;
+    }
+    input, button {
+      padding: 8px;
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>💬 Messaging App</h1>
+
+  <div id="login">
+    <input id="username" placeholder="Enter your username" />
+    <input id="room" placeholder="Enter chatroom name" />
+    <button onclick="joinChat()">Join Chat</button>
+  </div>
+
+  <div id="chat">
+    <h2 id="room-title"></h2>
+    <textarea id="messages" readonly></textarea><br />
+    <input id="message" placeholder="Type a message" />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    let username = "";
+    let room = "";
+
+    async function joinChat() {
+      username = document.getElementById("username").value.trim();
+      room = document.getElementById("room").value.trim();
+      if (!username || !room) return alert("Enter username and room name");
+
+      document.getElementById("room-title").innerText = `Room: ${room}`;
+      document.getElementById("login").style.display = "none";
+      document.getElementById("chat").style.display = "block";
+
+      fetchMessages();
+      setInterval(fetchMessages, 3000);
+    }
+
+    async function fetchMessages() {
+      const res = await fetch(`/api/chat/${room}`);
+      const data = await res.text();
+      document.getElementById("messages").value = data;
+    }
+
+    async function sendMessage() {
+      const msg = document.getElementById("message").value.trim();
+      if (!msg) return;
+      await fetch(`/api/chat/${room}`, {
+        method: "POST",
+        body: JSON.stringify({ username, message: msg }),
+      });
+      document.getElementById("message").value = "";
+      fetchMessages();
+    }
+  </script>
+</body>
+</html>
