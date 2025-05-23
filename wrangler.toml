@@ -1,5 +1,7 @@
 name = "messaging-app"
 type = "javascript"
+main = "src/index.js"
+compatibility_date = "2025-05-23"
 
 [durable_objects]
 bindings = [
@@ -10,9 +12,12 @@ bindings = [
 tag = "v1"
 new_classes = ["ChatRoom"]
 
+[site]
+bucket = "./public"
+
 [build]
-command = "npm run build"
+command = ""
 
 [env.production]
-zone_id = ""
-account_id = ""
+zone_id = ""  # optional, needed only if you're deploying to a custom domain
+account_id = "your-account-id-here"
