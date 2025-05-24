@@ -1,4 +1,4 @@
-name = "messaging-app"
+name = "chatapp"
 type = "javascript"
 main = "src/index.js"
 compatibility_date = "2025-05-23"
