@@ -1,4 +1,4 @@
-name = "chatapp"
+name = "chat-app"
 type = "javascript"
 main = "src/index.js"
 compatibility_date = "2025-05-23"
@@ -10,14 +10,5 @@ bindings = [
 
 [[migrations]]
 tag = "v1"
-new_classes = ["ChatRoom"]
+new_sqlite_classes = ["ChatRoom"]
 
-[site]
-bucket = "./public"
-
-[build]
-command = ""
-
-[env.production]
-zone_id = ""  # optional, needed only if you're deploying to a custom domain
-account_id = "your-account-id-here"
